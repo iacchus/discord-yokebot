@@ -1,3 +1,3 @@
-### yokebot
+## yokebot
 
 discord bot
