@@ -21,7 +21,7 @@ intents = discord.Intents.default()
 BRT = datetime.timezone(offset=-datetime.timedelta(hours=3))
 hours = [0, 6, 12, 18]
 times = [datetime.time(hour=hour, tzinfo=BRT) for hour in hours]
-times.append(datetime.time(hour=23, minute=30, tzinfo=BRT))
+times.append(datetime.time(hour=23, minute=56, tzinfo=BRT))
 
 
 #  def get_dhammapada_verse():
@@ -43,7 +43,7 @@ class YokeBot(discord.Client):
 
     @tasks.loop(time=times)
     async def dhammapada_task(self):
-        dhammapada = get_dhammapada()
+        dhammapada = get_dhammapada(as_codeblock=False, no_line_breaks=True)
 #          verse_numbers, verse = get_dhammapada_verse()
 #          verses = ", ".join([str(verse_number) for verse_number in verse_numbers])
 #          signature = f"— Dhammapada {verses}"
