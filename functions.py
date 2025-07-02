@@ -27,7 +27,7 @@ def get_dhammapada(as_codeblock=True, no_line_breaks=True):
 
     codeblock = "```" if as_codeblock else ""  # or just remove newline
 
-    message = dhammapada_message.format(verse=verse.strip(),
+    message = dhammapada_message.format(verse=verse,
                                         signature=signature,
                                         codeblock=codeblock)
 
