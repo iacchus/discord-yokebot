@@ -6,13 +6,12 @@ import re
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 DHAMMAPADA_JSON_FILEPATH = f"{SCRIPT_PATH}/dhammapada.json"
 
-
 dhammapada_message = """\
-{codeblock}
+{codeblock}\
 {verse}
 
 {signature}
-{codeblock}
+{codeblock}\
 """
 
 def get_dhammapada(as_codeblock=True, no_line_breaks=True):
@@ -22,15 +21,15 @@ def get_dhammapada(as_codeblock=True, no_line_breaks=True):
     keys = dhammapada_json.keys()
     random_choice = random.choice(list(keys))
 
-    #  return dhammapada_json[random_choice]
     verse_numbers, verse = dhammapada_json[random_choice]
     verses = ", ".join([str(verse_number) for verse_number in verse_numbers])
     signature = f"— Dhammapada {verses}"
 
     codeblock = "```" if as_codeblock else ""  # or just remove newline
 
-    message = dhammapada_message.format(verse=verse, signature=signature,
-                                        codeblock=codeblock).strip()
+    message = dhammapada_message.format(verse=verse.strip(),
+                                        signature=signature,
+                                        codeblock=codeblock)
 
     dhammapada = re.sub('(.)\n(?!\n)', r'\1 ', message) \
                  if no_line_breaks \
