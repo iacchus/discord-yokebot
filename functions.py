@@ -6,13 +6,6 @@ import re
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
 DHAMMAPADA_JSON_FILEPATH = f"{SCRIPT_PATH}/dhammapada.json"
 
-#  dhammapada_message = """\
-#  ```
-#  {verse}
-#
-#  {signature}
-#  ```\
-#  """
 
 dhammapada_message = """\
 {codeblock}
