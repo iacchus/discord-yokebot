@@ -9,8 +9,10 @@ import discord
 
 from discord.ext import tasks
 
-SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
-DHAMMAPADA_JSON_FILEPATH = f"{SCRIPT_PATH}/dhammapada.json"
+from functions import get_dhammapada
+
+#  SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
+#  DHAMMAPADA_JSON_FILEPATH = f"{SCRIPT_PATH}/dhammapada.json"
 
 YOKEBOT_TOKEN = os.getenv("DISCORD_TOKEN") or exit(1)
 
@@ -19,17 +21,17 @@ intents = discord.Intents.default()
 BRT = datetime.timezone(offset=-datetime.timedelta(hours=3))
 hours = [0, 6, 12, 18]
 times = [datetime.time(hour=hour, tzinfo=BRT) for hour in hours]
-#  times.append(datetime.time(hour=19, minute=3, tzinfo=BRT))
+times.append(datetime.time(hour=23, minute=30, tzinfo=BRT))
 
 
-def get_dhammapada_verse():
-    with open(DHAMMAPADA_JSON_FILEPATH, "r") as dhammapada_json_file:
-        dhammapada_json = json.load(dhammapada_json_file)
-
-    keys = dhammapada_json.keys()
-    random_choice = random.choice(list(keys))
-
-    return dhammapada_json[random_choice]
+#  def get_dhammapada_verse():
+#      with open(DHAMMAPADA_JSON_FILEPATH, "r") as dhammapada_json_file:
+#          dhammapada_json = json.load(dhammapada_json_file)
+#
+#      keys = dhammapada_json.keys()
+#      random_choice = random.choice(list(keys))
+#
+#      return dhammapada_json[random_choice]
 
 
 class YokeBot(discord.Client):
@@ -41,19 +43,21 @@ class YokeBot(discord.Client):
 
     @tasks.loop(time=times)
     async def dhammapada_task(self):
-        verse_numbers, verse = get_dhammapada_verse()
-        verses = ", ".join([str(verse_number) for verse_number in verse_numbers])
-        signature = f"— Dhammapada {verses}"
-
-        message = f"""\
-```
-{verse}
-
-{signature}
-```\
-"""
+        dhammapada = get_dhammapada()
+#          verse_numbers, verse = get_dhammapada_verse()
+#          verses = ", ".join([str(verse_number) for verse_number in verse_numbers])
+#          signature = f"— Dhammapada {verses}"
+#
+#          message = f"""\
+#  ```
+#  {verse}
+#
+#  {signature}
+#  ```\
+#  """
         #  await self.channel.send(f'time is come')  # pyright: ignore
-        await self.channel.send(message)  # pyright: ignore
+        #  await self.channel.send(message)  # pyright: ignore
+        await self.channel.send(dhammapada)  # pyright: ignore
 
     @dhammapada_task.before_loop
     async def before_my_task(self):
