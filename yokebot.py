@@ -35,17 +35,16 @@ class YokeBot(discord.Client):
         dhammapada = get_dhammapada(as_codeblock=False, no_line_breaks=True)
         #  dhammapada = get_dhammapada(as_codeblock=True, no_line_breaks=True)
 
-        await self.channel.send(dhammapada)  # pyright: ignore
+        await self.yokebot_channel.send(dhammapada)  # pyright: ignore
 
     @dhammapada_task.before_loop
     async def before_my_task(self):
         await self.wait_until_ready()
 
     async def on_ready(self):
-        #  self.channel = self.get_channel(1389484905951658067)
-        self.channel = self.get_channel(1390205879051354132)
+        self.yokebot_channel = self.get_channel(1390205879051354132)
         print('logged as', self.user)
-        #  await self.channel.send('in da house')
+        #  await self.yokebot_channel.send('in da house')
 
         if DEBUG:
             await self.dhammapada_task()
