@@ -42,6 +42,7 @@ class YokeBot(discord.Client):
     async def on_ready(self):
         self.channel = self.get_channel(1389484905951658067)
         print('logged as', self.user)
+        #  await self.channel.send('in da house')
 
         if DEBUG:
             await self.dhammapada_task()
