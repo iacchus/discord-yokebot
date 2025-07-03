@@ -9,9 +9,11 @@ from discord.ext import tasks
 
 from functions import get_dhammapada
 
+import secret_config
+
 DEBUG = True
 
-YOKEBOT_TOKEN = os.getenv("DISCORD_TOKEN") or exit(1)
+YOKEBOT_TOKEN = secret_config.DISCORD_TOKEN or exit(1)
 
 intents = discord.Intents.default()
 
@@ -40,7 +42,8 @@ class YokeBot(discord.Client):
         await self.wait_until_ready()
 
     async def on_ready(self):
-        self.channel = self.get_channel(1389484905951658067)
+        #  self.channel = self.get_channel(1389484905951658067)
+        self.channel = self.get_channel(1390205879051354132)
         print('logged as', self.user)
         #  await self.channel.send('in da house')
 
@@ -55,5 +58,6 @@ class YokeBot(discord.Client):
 yokebot = YokeBot(intents=intents)
 
 yokebot.run(token=YOKEBOT_TOKEN)
+
 
 
