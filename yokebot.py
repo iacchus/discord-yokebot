@@ -5,6 +5,7 @@ import os
 
 import discord
 
+from discord.ext import commands
 from discord.ext import tasks
 
 from functions import get_dhammapada
@@ -23,12 +24,16 @@ times = [datetime.time(hour=hour, tzinfo=BRT) for hour in hours]
 #  times.append(datetime.time(hour=0, minute=7, tzinfo=BRT))  # on_ready now
 
 
-class YokeBot(discord.Client):
+#  class YokeBot(discord.Client):
+class YokeBot(commands.Bot):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
     async def setup_hook(self):
         self.dhammapada_task.start()
+
 
     @tasks.loop(time=times)
     async def dhammapada_task(self):
@@ -41,9 +46,11 @@ class YokeBot(discord.Client):
         await self.yokebot_channel.purge(check=checkf)  # pyright: ignore
         await self.yokebot_channel.send(dhammapada)  # pyright: ignore
 
+
     @dhammapada_task.before_loop
     async def before_my_task(self):
         await self.wait_until_ready()
+
 
     async def on_ready(self):
         self.yokebot_channel = self.get_channel(1390205879051354132)
@@ -58,7 +65,7 @@ class YokeBot(discord.Client):
     #      if message.author != self.user:
     #          await message.channel.send(f'hey, {message.author}!')
 
-yokebot = YokeBot(intents=intents)
+yokebot = YokeBot(command_prefix="", intents=intents)
 
 yokebot.run(token=YOKEBOT_TOKEN)
 
