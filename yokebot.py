@@ -35,6 +35,7 @@ class YokeBot(discord.Client):
         dhammapada = get_dhammapada(as_codeblock=False, no_line_breaks=True)
         #  dhammapada = get_dhammapada(as_codeblock=True, no_line_breaks=True)
 
+            await self.yokebot_channel.purge(check=lambda message: message.content.splitlines()[-1].startswith("> — Dhammapada"))  # pyright: ignore
         await self.yokebot_channel.send(dhammapada)  # pyright: ignore
 
     @dhammapada_task.before_loop

@@ -35,4 +35,6 @@ def get_dhammapada(as_codeblock=True, no_line_breaks=True):
                  if no_line_breaks \
                  else message
 
+    dhammapada = "\n".join([f"> {line}" for line in dhammapada.splitlines()])
+
     return dhammapada
