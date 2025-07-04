@@ -35,7 +35,10 @@ class YokeBot(discord.Client):
         dhammapada = get_dhammapada(as_codeblock=False, no_line_breaks=True)
         #  dhammapada = get_dhammapada(as_codeblock=True, no_line_breaks=True)
 
-        await self.yokebot_channel.purge(check=lambda message: message.content.splitlines()[-1].startswith("> — Dhammapada"))  # pyright: ignore
+        checkf = lambda message: message.content\
+                                 .splitlines()[-1]\
+                                 .startswith("> — Dhammapada")
+        await self.yokebot_channel.purge(check=checkf)  # pyright: ignore
         await self.yokebot_channel.send(dhammapada)  # pyright: ignore
 
     @dhammapada_task.before_loop
@@ -50,10 +53,10 @@ class YokeBot(discord.Client):
         if DEBUG:
             await self.dhammapada_task()
 
-    async def on_message(self, message):
-        print('new message from', message.author, "on", message.channel.name)
-        if message.author != self.user:
-            await message.channel.send(f'hey, {message.author}!')
+    #  async def on_message(self, message):
+    #      print('new message from', message.author, "on", message.channel.name)
+    #      if message.author != self.user:
+    #          await message.channel.send(f'hey, {message.author}!')
 
 yokebot = YokeBot(intents=intents)
 
